@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
+    <title>Index-5</title>
+</head>
+
+<body>
+    <div class="container">
+        <div id="show"></div>
+    </div>
+    </div>
+    <script>
+        const products = [
+            { "code": "PEP221", "prod": "Pepsi", "price": 12, "instock": "Yes", "category": "Beverages" },
+            { "code": "COK113", "prod": "Coca Cola", "price": 18, "instock": "Yes", "category": "Beverages" },
+            { "code": "MIR646", "prod": "Mirinda", "price": 15, "instock": "No", "category": "Beverages" },
+            { "code": "SLI874", "prod": "Slice", "price": 22, "instock": "Yes", "category": "Beverages" },
+            { "code": "MIN654", "prod": "Minute Maid", "price": 25, "instock": "Yes", "category": "Beverages" },
+            { "code": "APP652", "prod": "Appy", "price": 10, "instock": "No", "category": "Beverages" },
+            { "code": "FRO085", "prod": "Frooti", "price": 30, "instock": "Yes", "category": "Beverages" },
+            { "code": "REA546", "prod": "Real", "price": 24, "instock": "No", "category": "Beverages" },
+            { "code": "DM5461", "prod": "Dairy Milk", "price": 40, "instock": "Yes", "category": "Chocolates" },
+            { "code": "KK6546", "prod": "Kitkat", "price": 15, "instock": "Yes", "category": "Chocolates" },
+            { "code": "PER5436", "prod": "Perk", "price": 8, "instock": "No", "category": "Chocolates" },
+            { "code": "FST241", "prod": "5 Star", "price": 25, "instock": "Yes", "category": "Chocolates" },
+            { "code": "NUT553", "prod": "Nutties", "price": 18, "instock": "Yes", "category": "Chocolates" },
+            { "code": "GEM006", "prod": "Gems", "price": 8, "instock": "No", "category": "Chocolates" },
+            { "code": "GD2991", "prod": "Good Day", "price": 25, "instock": "Yes", "category": "Biscuits" },
+            { "code": "PAG542", "prod": "Parle G", "price": 5, "instock": "Yes", "category": "Biscuits" },
+            { "code": "MON119", "prod": "Monaco", "price": 7, "instock": "No", "category": "Biscuits" },
+            { "code": "BOU291", "prod": "Bourbon", "price": 22, "instock": "Yes", "category": "Biscuits" },
+            { "code": "MAR951", "prod": "MarieGold", "price": 15, "instock": "Yes", "category": "Biscuits" },
+            { "code": "ORE188", "prod": "Oreo", "price": 30, "instock": "No", "category": "Biscuits" }
+        ];
+        let billItems = [];
+        let isBillOpen = false;
+
+        show();
+        function show(active = 0) {
+            let str = makeNavbar(active);
+            if (active === 1) {
+                str += showBillDetails();
+                str += showproductTable();
+            }
+            document.getElementById('show').innerHTML = str;
+        }
+
+
+        function showBill() {
+            show(1);
+        }
+
+        function makeNavbar(active = 0) {
+            let str = '<nav class="navbar navbar-expand-lg  navbar-dark bg-dark">';
+            str += ' <a class="navbar-brand" href="#">Billing System</a>';
+            str += '<button class="navbar-toggler" type="button" data-bs-toggle="collapse" datatarget="#navbarNavDropdown" >';
+            str += '<span class="navbar-toggler-icon"></span>';
+            str += '</button >';
+            str += '<div class="collapse navbar-collapse" id="navbarNavDropdown">';
+            str += '<ul class="navbar-nav">';
+            let active1 = active === 1 ? 'active' : '';
+            str += '<li class="nav-item ' + active1 + '">'
+            str += '<a class="nav-link" onclick="showBill()">New Bill</a>';
+            str += '</li >';
+            str += '</ul>'
+            str += '</div >';
+            str += '</nav >';
+            return str;
+        }
+        function showBillDetails() {
+            const totalItems = billItems.length;
+            const totalQuantity = billItems.reduce((total, item) => total + item.quantity, 0);
+            const totalAmount = billItems.reduce((total, item) => total + item.amount, 0);
+
+            let details = '<div class="row ml-1 mt-3">';
+            details += '<div class="">';
+            details += '<h4>Details of Current Bill</h4>';
+            details += '<div>Items: ' + totalItems + ', Quantity: ' + totalQuantity + ', Amount: ' + totalAmount + '</div>';
+            details += '</div>';
+            details += '</div>';
+
+            billItems.map((item, itemIndex) => {
+                details += '<div class="row border">';
+                details += '<div class="col-6 ">' + item.code + ' ' + item.prod + ' Price:' + item.price + ' Quantity:' + item.quantity + ' Value:' + item.amount + '</div>';
+                details += '<div class="col-6">';
+                details += '<button class="btn btn-success" onclick="addQty(' + itemIndex + ')"><i class="fa-solid fa-plus"></i></button>';
+                details += '<button class="btn btn-warning ml-1"  onclick="subQty(' + itemIndex + ')"><i class="fa-solid fa-minus"></i></button>';
+                details += '<button class="btn btn-danger ml-1" onclick="deleteItem(' + itemIndex + ')"><i class="fa-solid fa-xmark"></i></button>';
+                details += '</div>';
+                details += '</div>';
+            });
+            if (isBillOpen) {
+                details += '<button class="btn btn-primary" onclick="closeBill()">Close Bill</button>';
+            }
+            return details;
+        }
+
+        function showproductTable(filteredProducts = products) {
+            const arr = filteredProducts.map((pr, index) => {
+                let { code, prod, category, price, instock } = pr;
+                let str = '<div class="row border">';
+                str += '<div class="col-2">' + code + '</div>';
+                str += '<div class="col-2">' + prod + '</div>';
+                str += '<div class="col-2">' + category + '</div>';
+                str += '<div class="col-2">' + price + '</div>';
+                str += '<div class="col-2">' + instock + '</div>';
+                str += '<div class="col-2"><button class="btn btn-secondary btn-sm" onclick="addToBill(' + index + ')">add To BIll</button></div>';
+                str += '</div>';
+                return str;
+            });
+
+            const tableHeader = '<h3 class="text-center mt-3">Product List</h3>';
+            const productDropdown = makeDropdown('filterProduct', ['Beverages', 'Chocolates', 'Biscuits'], 'Select Product', 'applyFilters');
+            const stockDropdown = makeDropdown('filterStock', ['Yes', 'No'], 'Select In Stock', 'applyFilters');
+            const priceDropdown = makeDropdown('filterPrice', ['<10', '10-20', '>20'], 'Select Price', 'applyFilters');
+
+            let dropdownRow = '<div class="row">';
+            dropdownRow += '<div class="col-md-3">Filter Products By:</div>';
+            dropdownRow += '<div class="col-md-3">' + productDropdown + '</div>';
+            dropdownRow += '<div class="col-md-3">' + stockDropdown + '</div>';
+            dropdownRow += '<div class="col-md-3">' + priceDropdown + '</div>';
+            dropdownRow += '</div>';
+
+
+            let table = tableHeader + dropdownRow;
+            table += '<div class="row bg-dark text-white">'
+            table += '<div class="col-2" onclick="sort(0)">Code</div>';
+            table += '<div class="col-2" onclick="sort(1)">Product</div>';
+            table += '<div class="col-2" onclick="sort(2)">Category</div>';
+            table += '<div class="col-2" onclick="sort(3)">Price</div>';
+            table += '<div class="col-2" onclick="sort(4)">In Stock</div>';
+            table += '<div class="col-2"></div>';
+            table += '</div>';
+
+            table += arr.join('');
+            return table;
+        }
+
+
+        function applyFilters() {
+            const filterProduct = document.getElementById('filterProduct').value;
+            const filterStock = document.getElementById('filterStock').value;
+            const filterPrice = document.getElementById('filterPrice').value;
+
+            let filteredProducts = products;
+
+            if (filterProduct) {
+                filteredProducts = filteredProducts.filter(product => product.category === filterProduct);
+            }
+
+            if (filterStock) {
+                filteredProducts = filteredProducts.filter(product => product.instock === filterStock);
+            }
+
+            if (filterPrice) {
+                if (filterPrice === '<10') {
+                    filteredProducts = filteredProducts.filter(product => product.price < 10);
+                } else if (filterPrice === '10-20') {
+                    filteredProducts = filteredProducts.filter(product => product.price >= 10 && product.price <= 20);
+                } else if (filterPrice === '>20') {
+                    filteredProducts = filteredProducts.filter(product => product.price > 20);
+                }
+            }
+
+            const filteredTable = showproductTable(filteredProducts);
+            const billDetails = showBillDetails(); 
+            const navbar = makeNavbar(1);
+
+            const content = navbar + billDetails + filteredTable; 
+            document.getElementById('show').innerHTML = content;
+
+            document.getElementById('filterProduct').value = filterProduct;
+            document.getElementById('filterStock').value = filterStock;
+            document.getElementById('filterPrice').value = filterPrice;
+        }
+
+
+        function makeDropdown(id, options, label, onchangeFunction) {
+            let dropdown = '<select id="' + id + '" class="form-control" onchange="applyFilters()">';
+            dropdown += '<option value="">' + label + '</option>';
+
+            options.forEach((option) => {
+                dropdown += '<option value="' + option + '">' + option + '</option>';
+            });
+
+            dropdown += '</select>';
+            return dropdown;
+        }
+
+
+        function sort(colNo) {
+            switch (colNo) {
+                case 0: products.sort((p1, p2) => p1.code.localeCompare(p2.code));
+                    break;
+                case 1: products.sort((p1, p2) => p1.prod.localeCompare(p2.prod));
+                    break;
+                case 2: products.sort((p1, p2) => p1.category.localeCompare(p2.category));
+                    break;
+                case 3: products.sort((p1, p2) => (+p1.price) - (+p2.price));
+                    break;
+                case 4: products.sort((p1, p2) => p1.instock.localeCompare(p2.instock));
+                    break;
+            }
+            show(1);
+        }
+
+        function addToBill(index) {
+            const product = products[index];
+            const existingItem = billItems.find(item => item.code === product.code);
+
+            if (existingItem) {
+                existingItem.quantity++;
+                existingItem.amount = existingItem.quantity * product.price;
+            } else {
+                billItems.push({
+                    code: product.code,
+                    prod: product.prod,
+                    price: product.price,
+                    quantity: 1,
+                    amount: product.price
+                });
+            }
+            isBillOpen = true;
+            show(1);
+        }
+
+        function addQty(itemIndex) {
+            const item = billItems[itemIndex];
+            item.quantity++;
+            item.amount = item.quantity * item.price;
+            show(1);
+        }
+        function subQty(itemIndex) {
+            const item = billItems[itemIndex];
+            if (item.quantity > 1) {
+                item.quantity--;
+                item.amount = item.quantity * item.price;
+            } else {
+                billItems.splice(itemIndex, 1);
+            }
+            show(1);
+        }
+        function deleteItem(itemIndex) {
+            billItems.splice(itemIndex, 1);
+            show(1);
+        }
+        function closeBill() {
+            alert('Closing the current Bill.');
+            billItems = [];
+            isBillOpen = false;
+            show(1);
+        }
+    </script>
+</body>
+
+</html>
